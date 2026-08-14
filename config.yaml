@@ -1,0 +1,28 @@
+# Список VPS для мониторинга.
+# port      — какой TCP-порт проверять на доступность (обычно SSH: 22)
+# services  — необязательно. Если указаны и указан SSH-доступ, скрипт
+#             логинится по SSH и проверяет их состояние:
+#               "nginx"                -> systemctl is-active nginx
+#               "proc:python bot.py"   -> pgrep -f "python bot.py"
+#               "docker:container-name" -> sudo /usr/local/bin/docker-container-check.sh container-name
+#                                          (требует настроенный на VPS wrapper-скрипт + sudoers,
+#                                          см. README)
+#             Если services не заданы — проверяется только сетевая доступность (TCP-connect).
+
+vps:
+  - name: "Nginx-VPS (178.159.94.36)"
+    host: "178.159.94.36"
+    port: 22
+    ssh_user: "monitor"
+    ssh_port: 22
+    services:
+      - nginx
+
+  - name: "Docker-VPS (62.60.244.114)"
+    host: "62.60.244.114"
+    port: 22
+    ssh_user: "monitor"
+    ssh_port: 22
+    services:
+      - "docker:tg_project-tgbot-1"
+      - "docker:n8n-n8n-1"

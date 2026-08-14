@@ -176,12 +176,7 @@ def cmd_check(config, token, chat_id, ssh_key_path) -> None:
     save_state(state)
 
 
-def cmd_hourly(config, token, chat_id, ssh_key_path) -> None:
-    state = load_state()
-    if not state:
-        state = run_checks(config, ssh_key_path)
-        save_state(state)
-
+def format_summary(state: dict, title_ok: str, title_bad: str) -> str:
     lines = []
     all_ok = True
     for name, res in state.items():
@@ -191,14 +186,32 @@ def cmd_hourly(config, token, chat_id, ssh_key_path) -> None:
             all_ok = False
             lines.append(f"🔴 {name} — {res.get('reason')}")
 
-    header = "✅ Все VPS в порядке" if all_ok else "⚠️ Есть проблемы"
+    header = title_ok if all_ok else title_bad
     ts = datetime.now(timezone.utc).strftime("%Y-%m-%d %H:%M UTC")
-    send_telegram(token, chat_id, f"{header} ({ts})\n\n" + "\n".join(lines))
+    return f"{header} ({ts})\n\n" + "\n".join(lines)
+
+
+def cmd_hourly(config, token, chat_id, ssh_key_path) -> None:
+    state = load_state()
+    if not state:
+        state = run_checks(config, ssh_key_path)
+        save_state(state)
+
+    msg = format_summary(state, "✅ Все VPS в порядке", "⚠️ Есть проблемы")
+    send_telegram(token, chat_id, msg)
+
+
+def cmd_status(config, token, chat_id, ssh_key_path) -> None:
+    """Свежая проверка по запросу (/status) — всегда шлёт сводку, даже без изменений."""
+    cmd_check(config, token, chat_id, ssh_key_path)
+    state = load_state()
+    msg = format_summary(state, "🔍 Статус: всё ок", "🔍 Статус: есть проблемы")
+    send_telegram(token, chat_id, msg)
 
 
 def main() -> None:
     parser = argparse.ArgumentParser()
-    parser.add_argument("mode", choices=["check", "hourly", "test"])
+    parser.add_argument("mode", choices=["check", "hourly", "status", "test"])
     args = parser.parse_args()
 
     token = os.environ.get("TELEGRAM_BOT_TOKEN")
@@ -221,6 +234,8 @@ def main() -> None:
 
     if args.mode == "check":
         cmd_check(config, token, chat_id, ssh_key_path)
+    elif args.mode == "status":
+        cmd_status(config, token, chat_id, ssh_key_path)
     else:
         cmd_hourly(config, token, chat_id, ssh_key_path)
 

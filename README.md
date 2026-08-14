@@ -113,6 +113,81 @@ python monitor.py check
 python monitor.py hourly
 ```
 
+## 7. Команда /status в Telegram (мгновенная проверка по запросу)
+
+Обычный `check.yml`/`hourly.yml` работают по расписанию GitHub `schedule`,
+которое (см. раздел "Важные ограничения" ниже) может задерживаться на
+часы. Чтобы `/status` в Telegram отвечал быстро, нужен отдельный
+webhook-приёмник — маленький бесплатный Cloudflare Worker, который Telegram
+дёргает мгновенно в момент отправки сообщения, а он тут же запускает
+GitHub-воркфлоу `status.yml` через API (`workflow_dispatch` стартует за
+секунды, в отличие от `schedule`).
+
+Код воркера — [cloudflare-worker/status-webhook.js](cloudflare-worker/status-webhook.js).
+
+### 7.1. Создать Cloudflare Worker
+
+1. Зарегистрируйтесь на [dash.cloudflare.com](https://dash.cloudflare.com)
+   (бесплатно, без карты), если аккаунта ещё нет.
+2. В меню слева: **Workers & Pages → Create → Create Worker**. Дайте имя,
+   например `vps-monitor-status`, нажмите **Deploy** (заготовка "Hello
+   World" — это нормально, дальше заменим код).
+3. Откройте воркер → **Edit code** — вставьте туда содержимое файла
+   [cloudflare-worker/status-webhook.js](cloudflare-worker/status-webhook.js)
+   целиком, заменив всё, что было. **Save and Deploy**.
+4. Скопируйте URL воркера — он вида
+   `https://vps-monitor-status.<ваш-поддомен>.workers.dev`.
+
+### 7.2. Добавить секреты воркера
+
+В воркере: **Settings → Variables and Secrets → Add** — добавьте по одному,
+каждый раз выбирая тип **Secret** (шифруется):
+
+| Name | Value |
+|---|---|
+| `TELEGRAM_BOT_TOKEN` | тот же токен бота, что и в GitHub Secrets |
+| `TELEGRAM_CHAT_ID` | `718792023` |
+| `WEBHOOK_SECRET` | случайная строка (см. ниже) |
+| `GITHUB_TOKEN` | fine-grained PAT, см. пункт 7.3 |
+| `GITHUB_OWNER` | `marscreator77-alt` |
+| `GITHUB_REPO` | `mba_monitor` |
+
+Значение для `WEBHOOK_SECRET` (сгенерировано случайно, используйте как есть):
+
+```
+95a31181144a02869b05efdb64fdf36b299d1554d78b08a0f4a446ace1571fd7
+```
+
+### 7.3. Создать GitHub-токен для запуска workflow
+
+1. [github.com/settings/personal-access-tokens/new](https://github.com/settings/personal-access-tokens/new)
+2. **Resource owner**: `marscreator77-alt`.
+3. **Repository access**: Only select repositories → `mba_monitor`.
+4. **Permissions → Repository permissions → Actions**: `Read and write`.
+5. Generate token, скопируйте значение (показывается один раз) — это и
+   есть `GITHUB_TOKEN` из пункта 7.2. Больше нигде, кроме секрета в
+   Cloudflare Worker, его вставлять не нужно.
+
+### 7.4. Подключить Telegram webhook
+
+Выполните у себя в терминале (переменные `TELEGRAM_BOT_TOKEN` уже должны
+быть экспортированы из более ранних шагов; результат не пересылайте в чат
+целиком — там мелькает токен):
+
+```bash
+curl -F "url=https://vps-monitor-status.<ваш-поддомен>.workers.dev/" \
+     -F "secret_token=95a31181144a02869b05efdb64fdf36b299d1554d78b08a0f4a446ace1571fd7" \
+     "https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/setWebhook"
+```
+
+Ожидаемый ответ: `{"ok":true,"result":true,"description":"Webhook was set"}`.
+
+### 7.5. Проверить
+
+Напишите боту `/status` в Telegram. В течение секунды должно прийти
+`⏳ Запускаю проверку VPS...`, а через ~20–30 секунд — полная сводка вида
+`🔍 Статус: всё ок` (или список проблем, если что-то упало).
+
 ## Как это работает
 
 - `monitor.py check` — гоняется по расписанию раз в 15 минут (`check.yml`). Сравнивает
@@ -121,6 +196,10 @@ python monitor.py hourly
   давно лежит — не спамит, а напоминает раз в 30 минут.
 - `monitor.py hourly` — гоняется раз в час (`hourly.yml`), просто присылает
   сводку по последнему известному состоянию.
+- `monitor.py status` — запускается только вручную/по API (`status.yml`,
+  без расписания), через Cloudflare Worker по команде `/status` в Telegram
+  (см. раздел 7 выше). Делает свежую проверку и всегда присылает сводку,
+  даже если ничего не изменилось.
 - Состояние (`state.json`) коммитится обратно в репозиторий workflow'ом
   `check.yml`, чтобы переживать между запусками (GitHub Actions runner —
   одноразовый, свою файловую систему не сохраняет).

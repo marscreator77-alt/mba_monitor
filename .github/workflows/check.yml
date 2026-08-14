@@ -2,7 +2,7 @@ name: VPS check
 
 on:
   schedule:
-    - cron: "*/5 * * * *"   # каждые 5 минут — минимальный шаг у GitHub Actions
+    - cron: "*/15 * * * *"   # раз в 15 минут — при */5 GitHub сильно троттлит расписание
   workflow_dispatch: {}
 
 permissions:

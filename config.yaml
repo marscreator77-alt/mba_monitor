@@ -10,8 +10,8 @@
 #             Если services не заданы — проверяется только сетевая доступность (TCP-connect).
 
 vps:
-  - name: "Nginx-VPS (178.159.94.36)"
-    host: "178.159.94.36"
+  - name: "Nginx-VPS (178.236.240.23)"
+    host: "178.236.240.23"
     port: 22
     ssh_user: "monitor"
     ssh_port: 22

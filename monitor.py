@@ -144,12 +144,13 @@ def run_checks(config: dict, ssh_key_path) -> dict:
 
 
 def cmd_check(config, token, chat_id, ssh_key_path) -> None:
-    state = load_state()
+    old_state = load_state()
     fresh = run_checks(config, ssh_key_path)
     now = time.time()
+    new_state = {}
 
     for name, res in fresh.items():
-        prev = state.get(name, {"ok": True})
+        prev = old_state.get(name, {"ok": True})
         was_ok = prev.get("ok", True)
 
         if res["ok"] and not was_ok:
@@ -171,9 +172,12 @@ def cmd_check(config, token, chat_id, ssh_key_path) -> None:
             else:
                 res["last_alert"] = last_alert
 
-        state[name] = res
+        new_state[name] = res
 
-    save_state(state)
+    # записи VPS, которых больше нет в config.yaml (например, после смены
+    # имени/IP), сюда не попадают — состояние всегда отражает только
+    # актуальный список хостов
+    save_state(new_state)
 
 
 def format_summary(state: dict, title_ok: str, title_bad: str) -> str:

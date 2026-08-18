@@ -26,3 +26,7 @@ vps:
     services:
       - "docker:tg_project-tgbot-1"
       - "docker:n8n-n8n-1"
+      - "docker:tutor-cabinet-backend-1"
+      - "docker:tutor-cabinet-frontend-1"
+      - "docker:tutor-cabinet-postgres-1"
+      - "docker:tutor-cabinet-redis-1"

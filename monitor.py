@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """
-Мониторинг доступности и работоспособности VPS с уведомлениями в Telegram.
+Мониторинг доступности и работоспособности VPS и сайтов на них,
+с уведомлениями в Telegram.
 
 Режимы:
   python monitor.py check   — проверить все VPS, мгновенно уведомить при
@@ -134,12 +135,31 @@ def check_host(vps: dict, ssh_key_path):
     return True, None
 
 
+def check_website(site: dict):
+    url = site["url"]
+    last_reason = None
+    for attempt in range(RETRIES):
+        try:
+            resp = requests.get(url, timeout=10, allow_redirects=True)
+            if resp.status_code < 500:
+                return True, None
+            last_reason = f"HTTP {resp.status_code}"
+        except requests.RequestException as e:
+            last_reason = str(e)
+        if attempt < RETRIES - 1:
+            time.sleep(RETRY_DELAY)
+    return False, last_reason
+
+
 def run_checks(config: dict, ssh_key_path) -> dict:
     now = datetime.now(timezone.utc).isoformat()
     results = {}
-    for vps in config["vps"]:
+    for vps in config.get("vps", []):
         ok, reason = check_host(vps, ssh_key_path)
         results[vps["name"]] = {"ok": ok, "reason": reason, "checked_at": now}
+    for site in config.get("websites", []):
+        ok, reason = check_website(site)
+        results[site["name"]] = {"ok": ok, "reason": reason, "checked_at": now}
     return results
 
 

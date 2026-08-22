@@ -30,3 +30,33 @@ vps:
       - "docker:tutor-cabinet-frontend-1"
       - "docker:tutor-cabinet-postgres-1"
       - "docker:tutor-cabinet-redis-1"
+
+# Список сайтов для HTTP-проверки. Проверяется публичный домен по сети
+# (не напрямую IP VPS) — GET-запрос, "ок" считается любой ответ с кодом
+# < 500 (сервер отвечает; 404/redirect на логин и т.п. не считается падением).
+# Список собран автоматически по server_name из nginx-конфигов на обеих VPS.
+websites:
+  - name: "darbot.ru"
+    url: "https://darbot.ru/"
+  - name: "threads.darbot.ru"
+    url: "https://threads.darbot.ru/"
+  - name: "magnetly.ru"
+    url: "https://magnetly.ru/"
+  - name: "threads.magnetly.ru"
+    url: "https://threads.magnetly.ru/"
+  - name: "mva-tech.ru"
+    url: "https://mva-tech.ru/"
+  - name: "mva-zaslon.ru"
+    url: "https://mva-zaslon.ru/"
+  - name: "license.mva-zaslon.ru"
+    url: "https://license.mva-zaslon.ru/"
+  - name: "mva-control.ru"
+    url: "https://mva-control.ru/"
+  - name: "api.mva-control.ru"
+    url: "https://api.mva-control.ru/"
+  - name: "lk.darblog.ru"
+    url: "https://lk.darblog.ru/"
+  - name: "n8n.marscreator.online"
+    url: "https://n8n.marscreator.online/"
+  - name: "tgbotadmin.marscreator.online"
+    url: "https://tgbotadmin.marscreator.online/"

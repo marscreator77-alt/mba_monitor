@@ -11,6 +11,7 @@
   python monitor.py test    — отправить тестовое сообщение в Telegram.
 """
 import argparse
+import html
 import json
 import os
 import socket
@@ -144,8 +145,14 @@ def check_website(site: dict):
             if resp.status_code < 500:
                 return True, None
             last_reason = f"HTTP {resp.status_code}"
+        except requests.exceptions.Timeout:
+            last_reason = "таймаут соединения"
+        except requests.exceptions.SSLError:
+            last_reason = "ошибка SSL-сертификата"
+        except requests.exceptions.ConnectionError:
+            last_reason = "не удалось подключиться"
         except requests.RequestException as e:
-            last_reason = str(e)
+            last_reason = type(e).__name__
         if attempt < RETRIES - 1:
             time.sleep(RETRY_DELAY)
     return False, last_reason
@@ -172,13 +179,15 @@ def cmd_check(config, token, chat_id, ssh_key_path) -> None:
     for name, res in fresh.items():
         prev = old_state.get(name, {"ok": True})
         was_ok = prev.get("ok", True)
+        safe_name = html.escape(name)
+        safe_reason = html.escape(str(res.get("reason") or ""))
 
         if res["ok"] and not was_ok:
-            send_telegram(token, chat_id, f"✅ <b>{name}</b> снова в порядке.")
+            send_telegram(token, chat_id, f"✅ <b>{safe_name}</b> снова в порядке.")
         elif not res["ok"] and was_ok:
             send_telegram(
                 token, chat_id,
-                f"🔴 <b>{name}</b> недоступен!\nПричина: {res['reason']}",
+                f"🔴 <b>{safe_name}</b> недоступен!\nПричина: {safe_reason}",
             )
             res["last_alert"] = now
         elif not res["ok"] and not was_ok:
@@ -186,7 +195,7 @@ def cmd_check(config, token, chat_id, ssh_key_path) -> None:
             if now - last_alert > REALERT_INTERVAL:
                 send_telegram(
                     token, chat_id,
-                    f"🔴 <b>{name}</b> всё ещё недоступен.\nПричина: {res['reason']}",
+                    f"🔴 <b>{safe_name}</b> всё ещё недоступен.\nПричина: {safe_reason}",
                 )
                 res["last_alert"] = now
             else:
@@ -204,11 +213,13 @@ def format_summary(state: dict, title_ok: str, title_bad: str) -> str:
     lines = []
     all_ok = True
     for name, res in state.items():
+        safe_name = html.escape(name)
         if res.get("ok"):
-            lines.append(f"✅ {name}")
+            lines.append(f"✅ {safe_name}")
         else:
             all_ok = False
-            lines.append(f"🔴 {name} — {res.get('reason')}")
+            safe_reason = html.escape(str(res.get("reason") or ""))
+            lines.append(f"🔴 {safe_name} — {safe_reason}")
 
     header = title_ok if all_ok else title_bad
     ts = datetime.now(timezone.utc).strftime("%Y-%m-%d %H:%M UTC")

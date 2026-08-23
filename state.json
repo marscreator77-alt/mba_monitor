@@ -2,73 +2,73 @@
   "Nginx-VPS (178.236.240.23)": {
     "ok": true,
     "reason": null,
-    "checked_at": "2026-08-23T09:29:12.427336+00:00"
+    "checked_at": "2026-08-23T09:53:43.016993+00:00"
   },
   "Docker-VPS (62.60.244.114)": {
     "ok": true,
     "reason": null,
-    "checked_at": "2026-08-23T09:29:12.427336+00:00"
+    "checked_at": "2026-08-23T09:53:43.016993+00:00"
   },
   "darbot.ru": {
     "ok": true,
     "reason": null,
-    "checked_at": "2026-08-23T09:29:12.427336+00:00"
+    "checked_at": "2026-08-23T09:53:43.016993+00:00"
   },
   "threads.darbot.ru": {
     "ok": true,
     "reason": null,
-    "checked_at": "2026-08-23T09:29:12.427336+00:00"
+    "checked_at": "2026-08-23T09:53:43.016993+00:00"
   },
   "magnetly.ru": {
     "ok": true,
     "reason": null,
-    "checked_at": "2026-08-23T09:29:12.427336+00:00"
+    "checked_at": "2026-08-23T09:53:43.016993+00:00"
   },
   "threads.magnetly.ru": {
     "ok": true,
     "reason": null,
-    "checked_at": "2026-08-23T09:29:12.427336+00:00"
+    "checked_at": "2026-08-23T09:53:43.016993+00:00"
   },
   "mva-tech.ru": {
     "ok": true,
     "reason": null,
-    "checked_at": "2026-08-23T09:29:12.427336+00:00"
+    "checked_at": "2026-08-23T09:53:43.016993+00:00"
   },
   "mva-zaslon.ru": {
     "ok": false,
     "reason": "таймаут соединения",
-    "checked_at": "2026-08-23T09:29:12.427336+00:00",
+    "checked_at": "2026-08-23T09:53:43.016993+00:00",
     "last_alert": 1787477458.1569824
   },
   "license.mva-zaslon.ru": {
     "ok": false,
     "reason": "таймаут соединения",
-    "checked_at": "2026-08-23T09:29:12.427336+00:00",
+    "checked_at": "2026-08-23T09:53:43.016993+00:00",
     "last_alert": 1787477458.1569824
   },
   "mva-control.ru": {
     "ok": true,
     "reason": null,
-    "checked_at": "2026-08-23T09:29:12.427336+00:00"
+    "checked_at": "2026-08-23T09:53:43.016993+00:00"
   },
   "api.mva-control.ru": {
     "ok": true,
     "reason": null,
-    "checked_at": "2026-08-23T09:29:12.427336+00:00"
+    "checked_at": "2026-08-23T09:53:43.016993+00:00"
   },
   "lk.darblog.ru": {
     "ok": true,
     "reason": null,
-    "checked_at": "2026-08-23T09:29:12.427336+00:00"
+    "checked_at": "2026-08-23T09:53:43.016993+00:00"
   },
   "n8n.marscreator.online": {
     "ok": true,
     "reason": null,
-    "checked_at": "2026-08-23T09:29:12.427336+00:00"
+    "checked_at": "2026-08-23T09:53:43.016993+00:00"
   },
   "tgbotadmin.marscreator.online": {
     "ok": true,
     "reason": null,
-    "checked_at": "2026-08-23T09:29:12.427336+00:00"
+    "checked_at": "2026-08-23T09:53:43.016993+00:00"
   }
 }

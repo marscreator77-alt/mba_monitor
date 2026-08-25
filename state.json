@@ -2,52 +2,52 @@
   "Nginx-VPS (178.236.240.23)": {
     "ok": true,
     "reason": null,
-    "checked_at": "2026-08-25T01:26:36.757042+00:00"
+    "checked_at": "2026-08-25T02:39:27.017729+00:00"
   },
   "Docker-VPS (62.60.244.114)": {
     "ok": true,
     "reason": null,
-    "checked_at": "2026-08-25T01:26:36.757042+00:00"
+    "checked_at": "2026-08-25T02:39:27.017729+00:00"
   },
   "darbot.ru": {
     "ok": true,
     "reason": null,
-    "checked_at": "2026-08-25T01:26:36.757042+00:00"
+    "checked_at": "2026-08-25T02:39:27.017729+00:00"
   },
   "threads.darbot.ru": {
     "ok": true,
     "reason": null,
-    "checked_at": "2026-08-25T01:26:36.757042+00:00"
+    "checked_at": "2026-08-25T02:39:27.017729+00:00"
   },
   "magnetly.ru": {
     "ok": true,
     "reason": null,
-    "checked_at": "2026-08-25T01:26:36.757042+00:00"
+    "checked_at": "2026-08-25T02:39:27.017729+00:00"
   },
   "threads.magnetly.ru": {
     "ok": true,
     "reason": null,
-    "checked_at": "2026-08-25T01:26:36.757042+00:00"
+    "checked_at": "2026-08-25T02:39:27.017729+00:00"
   },
   "mva-tech.ru": {
     "ok": true,
     "reason": null,
-    "checked_at": "2026-08-25T01:26:36.757042+00:00"
+    "checked_at": "2026-08-25T02:39:27.017729+00:00"
   },
   "lk.darblog.ru": {
     "ok": true,
     "reason": null,
-    "checked_at": "2026-08-25T01:26:36.757042+00:00"
+    "checked_at": "2026-08-25T02:39:27.017729+00:00"
   },
   "n8n.marscreator.online": {
     "ok": false,
     "reason": "HTTP 503",
-    "checked_at": "2026-08-25T01:26:36.757042+00:00",
-    "last_alert": 1787621227.1693652
+    "checked_at": "2026-08-25T02:39:27.017729+00:00",
+    "last_alert": 1787625597.6298685
   },
   "tgbotadmin.marscreator.online": {
     "ok": true,
     "reason": null,
-    "checked_at": "2026-08-25T01:26:36.757042+00:00"
+    "checked_at": "2026-08-25T02:39:27.017729+00:00"
   }
 }

@@ -42,6 +42,8 @@ websites:
     url: "https://threads.darpost.ru/"
   - name: "mva-tech.ru"
     url: "https://mva-tech.ru/"
+  - name: "dar-creativity.ru"
+    url: "https://dar-creativity.ru/"
   - name: "n8n.marscreator.online"
     url: "https://n8n.marscreator.online/"
   - name: "tgbotadmin.marscreator.online"

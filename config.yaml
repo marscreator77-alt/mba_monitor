@@ -26,10 +26,6 @@ vps:
     services:
       - "docker:tg_project-tgbot-1"
       - "docker:n8n-n8n-1"
-      - "docker:tutor-cabinet-backend-1"
-      - "docker:tutor-cabinet-frontend-1"
-      - "docker:tutor-cabinet-postgres-1"
-      - "docker:tutor-cabinet-redis-1"
 
 # Список сайтов для HTTP-проверки. Проверяется публичный домен по сети
 # (не напрямую IP VPS) — GET-запрос, "ок" считается любой ответ с кодом
@@ -40,14 +36,12 @@ websites:
     url: "https://darbot.ru/"
   - name: "threads.darbot.ru"
     url: "https://threads.darbot.ru/"
-  - name: "magnetly.ru"
-    url: "https://magnetly.ru/"
-  - name: "threads.magnetly.ru"
-    url: "https://threads.magnetly.ru/"
+  - name: "darpost.ru"
+    url: "https://darpost.ru/"
+  - name: "threads.darpost.ru"
+    url: "https://threads.darpost.ru/"
   - name: "mva-tech.ru"
     url: "https://mva-tech.ru/"
-  - name: "lk.darblog.ru"
-    url: "https://lk.darblog.ru/"
   - name: "n8n.marscreator.online"
     url: "https://n8n.marscreator.online/"
   - name: "tgbotadmin.marscreator.online"

@@ -2,51 +2,51 @@
   "Nginx-VPS (178.236.240.23)": {
     "ok": true,
     "reason": null,
-    "checked_at": "2026-09-02T22:30:17.468268+00:00"
+    "checked_at": "2026-09-03T00:40:38.309094+00:00"
   },
   "Docker-VPS (62.60.244.114)": {
     "ok": true,
     "reason": null,
-    "checked_at": "2026-09-02T22:30:17.468268+00:00"
+    "checked_at": "2026-09-03T00:40:38.309094+00:00"
   },
   "darbot.ru": {
     "ok": true,
     "reason": null,
-    "checked_at": "2026-09-02T22:30:17.468268+00:00"
+    "checked_at": "2026-09-03T00:40:38.309094+00:00"
   },
   "threads.darbot.ru": {
     "ok": true,
     "reason": null,
-    "checked_at": "2026-09-02T22:30:17.468268+00:00"
+    "checked_at": "2026-09-03T00:40:38.309094+00:00"
   },
   "darpost.ru": {
     "ok": true,
     "reason": null,
-    "checked_at": "2026-09-02T22:30:17.468268+00:00"
+    "checked_at": "2026-09-03T00:40:38.309094+00:00"
   },
   "threads.darpost.ru": {
     "ok": true,
     "reason": null,
-    "checked_at": "2026-09-02T22:30:17.468268+00:00"
+    "checked_at": "2026-09-03T00:40:38.309094+00:00"
   },
   "mva-tech.ru": {
     "ok": true,
     "reason": null,
-    "checked_at": "2026-09-02T22:30:17.468268+00:00"
+    "checked_at": "2026-09-03T00:40:38.309094+00:00"
   },
   "dar-creativity.ru": {
     "ok": true,
     "reason": null,
-    "checked_at": "2026-09-02T22:30:17.468268+00:00"
+    "checked_at": "2026-09-03T00:40:38.309094+00:00"
   },
   "n8n.marscreator.online": {
     "ok": true,
     "reason": null,
-    "checked_at": "2026-09-02T22:30:17.468268+00:00"
+    "checked_at": "2026-09-03T00:40:38.309094+00:00"
   },
   "tgbotadmin.marscreator.online": {
     "ok": true,
     "reason": null,
-    "checked_at": "2026-09-02T22:30:17.468268+00:00"
+    "checked_at": "2026-09-03T00:40:38.309094+00:00"
   }
 }
